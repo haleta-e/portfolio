@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Android Developer Fundamentals",
+    "organization": "ECODERS",
+    "image": "https://i.imgur.com/dKELsFv.png",
+    "description": "Successfully completed Android Developer Fundamentals covering Android Studio, layouts, activities, user interface design and application development."
+  },
+  {
+    "title": "Programming Fundamentals",
+    "organization": "ECODERS",
+    "image": "https://i.imgur.com/G5gG6oO.png",
+    "description": "Successfully completed Programming Fundamentals covering algorithms, problem solving, programming logic and software development principles."
+  }
+]

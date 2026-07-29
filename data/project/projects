@@ -1,0 +1,51 @@
+[
+  {
+    "title": "EA Card Game",
+    "category": "frontend",
+    "description": "Interactive educational card game for children.",
+    "image": "https://i.imgur.com/mWY61L9.png",
+    "live": "https://ea-card-game.vercel.app/",
+    "github": "https://github.com/haleta-e",
+    "tech": ["HTML", "CSS"]
+  },
+
+  {
+    "title": "4Kilo Online Shop",
+    "category": "frontend",
+    "description": "Campus online shopping system.",
+    "image": "https://i.imgur.com/6c5iz3E.png",
+    "live": "https://haleta-e.github.io/4kilo-shop/",
+    "github": "https://github.com/haleta-e",
+    "tech": ["HTML", "CSS"]
+  },
+
+  {
+    "title": "EA Study Flow",
+    "category": "frontend",
+    "description": "Student productivity and study planner.",
+    "image": "https://i.imgur.com/WCpcfOZ.png",
+    "live": "https://ea-study-flow.vercel.app/",
+    "github": "https://github.com/haleta-e",
+    "tech": ["HTML", "CSS"]
+  },
+
+  {
+    "title": "Lost and Found Manager",
+    "category": "cpp",
+    "description": "Console-based Lost and Found management system developed in C++.",
+    "image": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800",
+    "live": "#",
+    "github": "https://github.com/haleta-e/lost-and-found-manager",
+    "tech": ["C++", "OOP", "File Handling"]
+  },
+
+  {
+    "title": "HIBRET System",
+    "category": "java",
+    "description": "Java desktop application for managing Equb and Edir systems.",
+    "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800",
+    "live": "#",
+    "github": "https://github.com/fenet-as/HIBRET-SYSTEM",
+    "tech": ["Java", "Swing", "MySQL"]
+  }
+]
