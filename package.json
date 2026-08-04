@@ -1,0 +1,25 @@
+{
+  "name": "insaa1.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haleta-e/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/haleta-e/portfolio/issues"
+  },
+  "homepage": "https://github.com/haleta-e/portfolio#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
