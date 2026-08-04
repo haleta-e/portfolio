@@ -241,6 +241,147 @@ app.patch("/certificate/:id", (req, res) => {
     res.json({ message: "Certificate updated", certificate: item });
 });
 
+// GET all certificates
+app.get("/certificate", (req, res) => {
+    res.json(portfolioData.certificates);
+});
+
+// GET single certificate
+app.get("/certificate/:id", (req, res) => {
+    const item = portfolioData.certificates.find(entry => entry.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Certificate not found" });
+    res.json(item);
+});
+
+// POST new certificate
+app.post("/certificate", (req, res) => {
+    const newId = Math.max(...portfolioData.certificates.map(c => c.id), 0) + 1;
+    const newCert = { id: newId, ...req.body };
+    portfolioData.certificates.push(newCert);
+    res.status(201).json({ message: "Certificate created", certificate: newCert });
+});
+
+// DELETE certificate
+app.delete("/certificate/:id", (req, res) => {
+    const index = portfolioData.certificates.findIndex(entry => entry.id === Number(req.params.id));
+    if (index === -1) return res.status(404).json({ message: "Certificate not found" });
+    const deleted = portfolioData.certificates.splice(index, 1);
+    res.json({ message: "Certificate deleted", certificate: deleted[0] });
+});
+
+// GET all skills
+app.get("/skill", (req, res) => {
+    res.json(portfolioData.skills);
+});
+
+// GET single skill
+app.get("/skill/:id", (req, res) => {
+    const item = portfolioData.skills.find(skill => skill.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Skill not found" });
+    res.json(item);
+});
+
+// POST new skill
+app.post("/skill", (req, res) => {
+    const newId = Math.max(...portfolioData.skills.map(s => s.id), 0) + 1;
+    const newSkill = { id: newId, ...req.body };
+    portfolioData.skills.push(newSkill);
+    res.status(201).json({ message: "Skill created", skill: newSkill });
+});
+
+// DELETE skill
+app.delete("/skill/:id", (req, res) => {
+    const index = portfolioData.skills.findIndex(skill => skill.id === Number(req.params.id));
+    if (index === -1) return res.status(404).json({ message: "Skill not found" });
+    const deleted = portfolioData.skills.splice(index, 1);
+    res.json({ message: "Skill deleted", skill: deleted[0] });
+});
+
+// GET all learning
+app.get("/learning", (req, res) => {
+    res.json(portfolioData.learning);
+});
+
+// GET single learning item
+app.get("/learning/:id", (req, res) => {
+    const item = portfolioData.learning.find(entry => entry.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Learning item not found" });
+    res.json(item);
+});
+
+// POST new learning item
+app.post("/learning", (req, res) => {
+    const newId = Math.max(...portfolioData.learning.map(l => l.id), 0) + 1;
+    const newLearning = { id: newId, ...req.body };
+    portfolioData.learning.push(newLearning);
+    res.status(201).json({ message: "Learning item created", learning: newLearning });
+});
+
+// DELETE learning item
+app.delete("/learning/:id", (req, res) => {
+    const index = portfolioData.learning.findIndex(entry => entry.id === Number(req.params.id));
+    if (index === -1) return res.status(404).json({ message: "Learning item not found" });
+    const deleted = portfolioData.learning.splice(index, 1);
+    res.json({ message: "Learning item deleted", learning: deleted[0] });
+});
+
+// GET all projects
+app.get("/project", (req, res) => {
+    res.json(portfolioData.projects);
+});
+
+// GET single project
+app.get("/project/:id", (req, res) => {
+    const item = portfolioData.projects.find(project => project.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Project not found" });
+    res.json(item);
+});
+
+// POST new project
+app.post("/project", (req, res) => {
+    const newId = Math.max(...portfolioData.projects.map(p => p.id), 0) + 1;
+    const newProject = { id: newId, ...req.body };
+    portfolioData.projects.push(newProject);
+    res.status(201).json({ message: "Project created", project: newProject });
+});
+
+// DELETE project
+app.delete("/project/:id", (req, res) => {
+    const index = portfolioData.projects.findIndex(project => project.id === Number(req.params.id));
+    if (index === -1) return res.status(404).json({ message: "Project not found" });
+    const deleted = portfolioData.projects.splice(index, 1);
+    res.json({ message: "Project deleted", project: deleted[0] });
+});
+
+// PUT methods (full update)
+app.put("/project/:id", (req, res) => {
+    const item = portfolioData.projects.find(project => project.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Project not found" });
+    Object.assign(item, req.body);
+    res.json({ message: "Project updated", project: item });
+});
+
+app.put("/skill/:id", (req, res) => {
+    const item = portfolioData.skills.find(skill => skill.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Skill not found" });
+    Object.assign(item, req.body);
+    res.json({ message: "Skill updated", skill: item });
+});
+
+app.put("/learning/:id", (req, res) => {
+    const item = portfolioData.learning.find(entry => entry.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Learning item not found" });
+    Object.assign(item, req.body);
+    res.json({ message: "Learning item updated", learning: item });
+});
+
+app.put("/certificate/:id", (req, res) => {
+    const item = portfolioData.certificates.find(entry => entry.id === Number(req.params.id));
+    if (!item) return res.status(404).json({ message: "Certificate not found" });
+    Object.assign(item, req.body);
+    res.json({ message: "Certificate updated", certificate: item });
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
