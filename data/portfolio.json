@@ -1,0 +1,20 @@
+{
+  "profile": {
+    "name": "Etsegenet Amsalu",
+    "bio": "Computer Science student and Frontend Developer focused on building responsive, interactive, and user-friendly web applications.",
+    "email": "etsegenetamsalu56@gmail.com",
+    "linkedin": "https://linkedin.com/in/etsegenet-amsalu",
+    "github": "https://github.com/haleta-e"
+  },
+  "projects": [
+    {"id":1,"title":"EA Card Game","category":"frontend","description":"Interactive educational card game for children.","image":"image/proj-card.png","tech":["HTML","CSS","JavaScript"],"live":"https://ea-card-game.vercel.app/","github":"https://github.com/haleta-e/EA-card-game"},
+    {"id":2,"title":"4Kilo Online Shop","category":"frontend","description":"Campus online shopping system.","image":"image/proj-shop.png","tech":["HTML","CSS","JavaScript"],"live":"https://haleta-e.github.io/4kilo-shop/","github":"https://github.com/haleta-e/4kilo-shop"},
+    {"id":3,"title":"EA Study Flow","category":"frontend","description":"Student productivity and study planner.","image":"image/proj-study.png","tech":["HTML","CSS","JavaScript"],"live":"https://ea-study-flow.vercel.app/","github":"https://github.com/haleta-e/EA-study-flow"},
+    {"id":4,"title":"Lost & Found Manager","category":"cpp","description":"C++ console application for managing lost and found items using file handling and sorting features.","image":"image/proj-hibret.jpg","tech":["C++","File Handling","Sorting"],"live":"https://github.com/haleta-e/lost-and-found-manager","github":"https://github.com/haleta-e/lost-and-found-manager"},
+    {"id":5,"title":"HIBRET System","category":"java","description":"Java Swing desktop app used to manage traditional equb and edir operations with database support.","image":"image/proj-hibret.jpg","tech":["Java","Swing","Database"],"live":"https://github.com/fenet-as/HIBRET-SYSTEM","github":"https://github.com/fenet-as/HIBRET-SYSTEM"}
+  ],
+  "skills": [{"id":1,"name":"HTML5","description":"Semantic and accessible web pages."},{"id":2,"name":"CSS3","description":"Responsive layouts, Flexbox, Grid and animations."},{"id":3,"name":"JavaScript","description":"Interactive websites and dynamic functionality."},{"id":4,"name":"DOM Manipulation","description":"Creating interactive interfaces with JavaScript."},{"id":5,"name":"JSON","description":"Working with structured data in web applications."},{"id":6,"name":"Responsive Design","description":"Building websites that work on all devices."},{"id":7,"name":"Git & GitHub","description":"Version control and project management."},{"id":8,"name":"Java","description":"Object-oriented programming and application development."},{"id":9,"name":"C++","description":"Algorithms, problem solving and data structures."}],
+  "learning": [{"id":1,"title":"JavaScript ES6","progress":30},{"id":2,"title":"DOM Manipulation","progress":10},{"id":3,"title":"JSON","progress":10}],
+  "experience": [{"id":1,"title":"INSA Summer Camp Participant","subtitle":"","description":"Gained hands-on experience in development and team collaboration.","technologies":[],"responsibilities":[]},{"id":2,"title":"Frontend Development Trainee","subtitle":"Frontend Development Track | 2026","description":"Participated in intensive frontend development training.","technologies":["HTML","CSS","JavaScript","JSON","Git","GitHub"],"responsibilities":["Developed responsive web interfaces","Implemented interactive features"]},{"id":3,"title":"Java Developer","subtitle":"HIBRET System Project | 2026","description":"Developed a desktop-based management system using Java and MySQL.","technologies":["Java","Java Swing","MySQL"],"responsibilities":["Designed GUI","Implemented database operations"]}],
+  "certificates": [{"id":1,"title":"Android Developer Fundamentals","organization":"ECODERS","image":"https://i.imgur.com/dKELsFv.png","description":"Successfully completed Android Developer Fundamentals."},{"id":2,"title":"Programming Fundamentals","organization":"ECODERS","image":"https://i.imgur.com/G5gG6oO.png","description":"Successfully completed Programming Fundamentals."}]
+}

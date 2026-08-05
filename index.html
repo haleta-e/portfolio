@@ -1,151 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etsegenet Amsalu - Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- ==================== NAVBAR ==================== -->
-<header>
-    <nav id="navbar">
-        <div class="logo">EA</div>
-        <ul>
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#certificates">Certificates</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-</header>
-
-<!-- ==================== HERO ==================== -->
-<section id="hero">
-    <div class="hero-content">
-        <div class="hero-profile">
-            <img src="image/6003481707438345603_120.jpg" alt="Profile" class="profile-photo">
-        </div>
-        <h1>Hi, I'm <span id="name">Etsegenet Amsalu</span></h1>
-        <h2>I'm a <span id="typing-text"></span></h2>
-        <p id="bio">Computer Science student and Frontend Developer focused on building responsive, interactive, and user-friendly web applications.</p>
-        <div class="hero-buttons">
-            <a href="#projects" class="btn">View My Work</a>
-            <a href="#contact" class="btn btn-outline">Get In Touch</a>
-            <button class="btn" onclick="editPortfolio()" style="margin-top: 8px;">✏️ Edit Profile</button>
-        </div>
-    </div>
-</section>
-
-<!-- ==================== ABOUT ==================== -->
-<section id="about">
-    <h2 class="section-title">About Me</h2>
-    <p class="section-description">I'm a passionate developer with a strong foundation in computer science. I specialize in creating responsive, user-centered web applications using modern frontend technologies.</p>
-    <p>With hands-on experience in HTML5, CSS3, JavaScript, and responsive design, I focus on delivering clean, maintainable code and exceptional user experiences. I'm continuously learning new technologies and best practices to stay at the forefront of web development.</p>
-</section>
-
-<!-- ==================== PROJECTS ==================== -->
-<section id="projects">
-    <h2 class="section-title">My Projects</h2>
-    <div class="filter-buttons">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="frontend">Frontend</button>
-        <button class="filter-btn" data-filter="java">Java</button>
-        <button class="filter-btn" data-filter="cpp">C++</button>
-    </div>
-    <div id="project-container"></div>
-    <div style="text-align: center; margin-top: 30px;">
-        <button class="btn" onclick="editAllProjects()">Edit All Projects</button>
-    </div>
-</section>
-
-<!-- ==================== SKILLS ==================== -->
-<section id="skills">
-    <h2 class="section-title">Skills & Technologies</h2>
-    <div id="skills-container" class="skills-grid"></div>
-    <div style="text-align: center; margin-top: 30px;">
-        <button class="btn" onclick="editAllSkills()">Edit All Skills</button>
-    </div>
-</section>
-
-<!-- ==================== CURRENT LEARNING ==================== -->
-<section id="learning">
-    <h2 class="section-title">Currently Learning</h2>
-    <div id="learning-container" class="learning-card"></div>
-    <div style="text-align: center; margin-top: 30px;">
-        <button class="btn" onclick="editAllLearning()">Edit Learning Progress</button>
-    </div>
-</section>
-
-<!-- ==================== EXPERIENCE ==================== -->
-<section id="experience">
-    <h2 class="section-title">Experience</h2>
-    <div id="experience-content"></div>
-    <div style="text-align: center; margin-top: 30px;">
-        <button class="btn" onclick="editAllExperience()">Edit All Experience</button>
-    </div>
-</section>
-
-<!-- ==================== CERTIFICATES ==================== -->
-<section id="certificates">
-    <h2 class="section-title">Certificates</h2>
-    <div id="certificate-container"></div>
-    <div style="text-align: center; margin-top: 30px;">
-        <button class="btn" onclick="editAllCertificates()">Edit All Certificates</button>
-    </div>
-</section>
-
-<!-- ==================== CONTACT ==================== -->
-<section id="contact">
-    <h2 class="section-title">Get In Touch</h2>
-    <p class="section-description">Let's collaborate and build something amazing together!</p>
-    <div class="contact-grid">
-        <a href="etsegenetamsalu56@gmail.com">📧 Email</a>
-        <a href="https://linkedin.com/in/etsegenet-amsalu" target="_blank">💼 LinkedIn</a>
-        <a href="https://github.com/haleta-e" target="_blank">🐙 GitHub</a>
-        
-    </div>
-</section>
-
-<!-- ==================== FOOTER ==================== -->
-<footer>
-    <h3 id="footer-name">Etsegenet Amsalu</h3>
-    <p>Computer Science Student • Frontend Developer</p>
-    <p>Building modern websites with HTML, CSS & JavaScript.</p>
-    <p>© 2026 All Rights Reserved.</p>
-</footer>
-
-<!-- ==================== CERTIFICATE MODAL ==================== -->
-<div id="certificate-modal">
-    <span id="close-modal">&times;</span>
-    <img id="modal-image" src="" alt="Certificate">
-</div>
-<!-- ==================== UNIVERSAL EDIT MODAL ==================== -->
-<div id="edit-modal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close" onclick="closeEditModal()">&times;</span>
-        <h2 id="modal-title">Edit</h2>
-        <form id="edit-form">
-            <div id="form-fields"></div>
-            <div class="modal-buttons">
-                <button type="submit" class="btn">Save Changes</button>
-                <button type="button" class="btn" onclick="closeEditModal()" style="background: #6b7280;">Cancel</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-<!-- Back to Top Button -->
-<button id="topBtn"></button>
-
+<header><nav id="navbar"><div class="logo">EA</div><ul><li><a href="#hero">Home</a></li><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#skills">Skills</a></li><li><a href="#experience">Experience</a></li><li><a href="#certificates">Certificates</a></li><li><a href="#contact">Contact</a></li></ul></nav></header>
+<section id="hero"><div class="hero-content"><div class="hero-profile"><img src="image/6003481707438345603_120.jpg" alt="Etsegenet Amsalu" class="profile-photo"></div><h1>Hi, I'm <span id="name">Etsegenet Amsalu</span></h1><h2>I'm a <span id="typing-text"></span></h2><p id="bio">Computer Science student and Frontend Developer focused on building responsive, interactive, and user-friendly web applications.</p><div class="hero-buttons"><a href="#projects" class="btn">View My Work</a><a href="#contact" class="btn btn-outline">Get In Touch</a></div></div></section>
+<section id="about"><h2 class="section-title">About Me</h2><p class="section-description">I'm a passionate developer with a strong foundation in computer science. I specialize in creating responsive, user-centered web applications using modern frontend technologies.</p><p>With hands-on experience in HTML5, CSS3, JavaScript, and responsive design, I focus on delivering clean, maintainable code and exceptional user experiences. I'm continuously learning new technologies and best practices to stay at the forefront of web development.</p></section>
+<section id="projects"><h2 class="section-title">My Projects</h2><div class="filter-buttons"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="frontend">Frontend</button><button class="filter-btn" data-filter="java">Java</button><button class="filter-btn" data-filter="cpp">C++</button></div><div id="project-container"></div></section>
+<section id="skills"><h2 class="section-title">Skills & Technologies</h2><div id="skills-container" class="skills-grid"></div></section>
+<section id="learning"><h2 class="section-title">Currently Learning</h2><div id="learning-container"></div></section>
+<section id="experience"><h2 class="section-title">Experience</h2><div id="experience-content"></div></section>
+<section id="certificates"><h2 class="section-title">Certificates</h2><div id="certificate-container"></div></section>
+<section id="contact"><h2 class="section-title">Get In Touch</h2><p class="section-description">Let's collaborate and build something amazing together!</p><div class="contact-grid"><a id="email-link" href="mailto:etsegenetamsalu56@gmail.com">Email</a><a id="linkedin-link" href="#" target="_blank" rel="noreferrer">LinkedIn</a><a id="github-link" href="#" target="_blank" rel="noreferrer">GitHub</a></div></section>
+<footer><h3 id="footer-name">Etsegenet Amsalu</h3><p>Computer Science Student • Frontend Developer</p><p>Building modern websites with HTML, CSS & JavaScript.</p><p>© 2026 All Rights Reserved.</p></footer>
+<div id="certificate-modal"><span id="close-modal">&times;</span><img id="modal-image" src="" alt="Certificate preview"></div><button id="topBtn" aria-label="Back to top">↑</button>
 <script src="script.js"></script>
 </body>
 </html>

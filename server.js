@@ -1,248 +1,46 @@
 const express = require("express");
+const session = require("express-session");
+const fs = require("fs");
 const path = require("path");
 
 const app = express();
+const dataPath = path.join(__dirname, "data", "portfolio.json");
+const adminUser = process.env.ADMIN_USERNAME || "admin";
+const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+let portfolioData = JSON.parse(fs.readFileSync(dataPath, "utf8"));
 
-app.use(express.json());
+app.use(express.json({ limit: "1mb" }));
+app.use(session({ secret: process.env.SESSION_SECRET || "change-this-session-secret", resave: false, saveUninitialized: false, cookie: { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 8 * 60 * 60 * 1000 } }));
 app.use(express.static(__dirname));
 
-const portfolioData = {
-    profile: {
-        name: "Etsegenet Amsalu",
-        bio: "Computer Science student and Frontend Developer focused on building responsive, interactive, and user-friendly web applications."
-    },
-    projects: [
-        {
-            id: 1,
-            title: "EA Card Game",
-            category: "frontend",
-            description: "Interactive educational card game for children.",
-            image: "image/proj-card.png",
-            tech: ["HTML", "CSS", "JavaScript"],
-            live: "https://ea-card-game.vercel.app/",
-            github: "https://github.com/haleta-e/EA-card-game"
-        },
-        {
-            id: 2,
-            title: "4Kilo Online Shop",
-            category: "frontend",
-            description: "Campus online shopping system.",
-            image: "image/proj-shop.png",
-            tech: ["HTML", "CSS", "JavaScript"],
-            live: "https://haleta-e.github.io/4kilo-shop/",
-            github: "https://github.com/haleta-e/4kilo-shop"
-        },
-        {
-            id: 3,
-            title: "EA Study Flow",
-            category: "frontend",
-            description: "Student productivity and study planner.",
-            image: "image/proj-study.png",
-            tech: ["HTML", "CSS", "JavaScript"],
-            live: "https://ea-study-flow.vercel.app/",
-            github: "https://github.com/haleta-e/EA-study-flow"
-        },
-        {
-            id: 4,
-            title: "Lost & Found Manager",
-            category: "cpp",
-            description: "C++ console application for managing lost and found items using file handling and sorting features.",
-            image: "image/project.jpg",
-            tech: ["C++", "File Handling", "Sorting"],
-            live: "https://github.com/haleta-e/lost-and-found-manager",
-            github: "https://github.com/haleta-e/lost-and-found-manager"
-        },
-        {
-            id: 5,
-            title: "HIBRET System",
-            category: "java",
-            description: "Java Swing desktop app used to manage traditional equb and edir operations with database support.",
-            image: "image/project.jpg",
-            tech: ["Java", "Swing", "Database"],
-            live: "https://github.com/fenet-as/HIBRET-SYSTEM",
-            github: "https://github.com/fenet-as/HIBRET-SYSTEM"
-        }
-    ],
-    skills: [
-        { id: 1, name: "HTML5", description: "Semantic and accessible web pages." },
-        { id: 2, name: "CSS3", description: "Responsive layouts, Flexbox, Grid and animations." },
-        { id: 3, name: "JavaScript", description: "Interactive websites and dynamic functionality." },
-        { id: 4, name: "DOM Manipulation", description: "Creating interactive interfaces with JavaScript." },
-        { id: 5, name: "JSON", description: "Working with structured data in web applications." },
-        { id: 6, name: "Responsive Design", description: "Building websites that work on all devices." },
-        { id: 7, name: "Git & GitHub", description: "Version control and project management." },
-        { id: 8, name: "Java", description: "Object-oriented programming and application development." },
-        { id: 9, name: "C++", description: "Algorithms, problem solving and data structures." }
-    ],
-    certificates: [
-        {
-            id: 1,
-            title: "Android Developer Fundamentals",
-            organization: "ECODERS",
-            image: "https://i.imgur.com/dKELsFv.png",
-            description: "Successfully completed Android Developer Fundamentals."
-        },
-        {
-            id: 2,
-            title: "Programming Fundamentals",
-            organization: "ECODERS",
-            image: "https://i.imgur.com/G5gG6oO.png",
-            description: "Successfully completed Programming Fundamentals."
-        }
-    ],
-    learning: [
-        { id: 1, title: "JavaScript ES6", progress: 30 },
-        { id: 2, title: "DOM Manipulation", progress: 10 },
-        { id: 3, title: "JSON", progress: 10 }
-    ],
-    experience: [
-        {
-            id: 1,
-            title: "INSA Summer Camp Participant",
-            subtitle: "",
-            description: "Gained hands-on experience in development and team collaboration.",
-            technologies: [],
-            responsibilities: []
-        },
-        {
-            id: 2,
-            title: "Frontend Development Trainee",
-            subtitle: "Frontend Development Track | 2026",
-            description: "Participated in intensive frontend development training.",
-            technologies: ["HTML", "CSS", "JavaScript", "JSON", "Git", "GitHub"],
-            responsibilities: ["Developed responsive web interfaces", "Implemented interactive features"]
-        },
-        {
-            id: 3,
-            title: "Java Developer",
-            subtitle: "HIBRET System Project | 2026",
-            description: "Developed a desktop-based management system using Java and MySQL.",
-            technologies: ["Java", "Java Swing", "MySQL"],
-            responsibilities: ["Designed GUI", "Implemented database operations"]
-        }
-    ]
-};
+function saveData() {
+  const tempPath = `${dataPath}.tmp`;
+  fs.writeFileSync(tempPath, JSON.stringify(portfolioData, null, 2));
+  fs.renameSync(tempPath, dataPath);
+}
+function requireAdmin(req, res, next) { if (!req.session.isAdmin) return res.status(401).json({ error: "Admin login required" }); next(); }
+function sectionName(value) { return { project: "projects", projects: "projects", skill: "skills", skills: "skills", learning: "learning", certificate: "certificates", certificates: "certificates", experience: "experience" }[value]; }
+function cleanArray(value) { return Array.isArray(value) ? value.map(String).map(v => v.trim()).filter(Boolean) : String(value || "").split(",").map(v => v.trim()).filter(Boolean); }
+function validate(section, body) { if (["projects", "skills", "learning", "certificates", "experience"].includes(section) && !String(body.title || body.name || "").trim()) return "A title or name is required"; if (section === "learning" && (!Number.isInteger(Number(body.progress)) || Number(body.progress) < 0 || Number(body.progress) > 100)) return "Progress must be a whole number from 0 to 100"; return null; }
+function normalize(section, body, existing = {}) {
+  const item = { ...existing, ...body };
+  if (section === "projects") item.tech = cleanArray(body.tech ?? existing.tech);
+  if (section === "experience") { item.technologies = cleanArray(body.technologies ?? existing.technologies); item.responsibilities = cleanArray(body.responsibilities ?? existing.responsibilities); }
+  if (section === "learning") item.progress = Number(body.progress ?? existing.progress ?? 0);
+  return item;
+}
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
-
-app.get("/api/portfolio", (req, res) => {
-    res.json(portfolioData);
-});
-
-app.patch("/api/portfolio/:section/:id", (req, res) => {
-    const { section, id } = req.params;
-    const listName = {
-        project: "projects",
-        skill: "skills",
-        learning: "learning",
-        certificate: "certificates",
-        experience: "experience",
-        profile: "profile"
-    }[section];
-
-    if (!listName) return res.status(400).json({ error: "Unsupported section" });
-
-    if (section === "profile") {
-        portfolioData.profile = { ...portfolioData.profile, ...req.body };
-        return res.json({ profile: portfolioData.profile });
-    }
-
-    const list = portfolioData[listName];
-    const item = list.find(entry => entry.id === Number(id));
-
-    if (!item) return res.status(404).json({ error: "Item not found" });
-
-    if (section === "project") {
-        if (req.body.title !== undefined) item.title = req.body.title;
-        if (req.body.description !== undefined) item.description = req.body.description;
-        if (req.body.tech !== undefined) item.tech = Array.isArray(req.body.tech) ? req.body.tech : req.body.tech.split(",").map(value => value.trim()).filter(Boolean);
-        if (req.body.live !== undefined) item.live = req.body.live;
-        if (req.body.github !== undefined) item.github = req.body.github;
-    } else if (section === "skill") {
-        if (req.body.name !== undefined) item.name = req.body.name;
-        if (req.body.description !== undefined) item.description = req.body.description;
-    } else if (section === "learning") {
-        if (req.body.title !== undefined) item.title = req.body.title;
-        if (req.body.progress !== undefined) item.progress = Math.min(100, Math.max(0, Number(req.body.progress)));
-    } else if (section === "certificate") {
-        if (req.body.title !== undefined) item.title = req.body.title;
-        if (req.body.organization !== undefined) item.organization = req.body.organization;
-        if (req.body.description !== undefined) item.description = req.body.description;
-    } else if (section === "experience") {
-        if (req.body.title !== undefined) item.title = req.body.title;
-        if (req.body.subtitle !== undefined) item.subtitle = req.body.subtitle;
-        if (req.body.description !== undefined) item.description = req.body.description;
-        if (req.body.technologies !== undefined) item.technologies = Array.isArray(req.body.technologies) ? req.body.technologies : req.body.technologies.split(",").map(value => value.trim()).filter(Boolean);
-        if (req.body.responsibilities !== undefined) item.responsibilities = Array.isArray(req.body.responsibilities) ? req.body.responsibilities : req.body.responsibilities.split(",").map(value => value.trim()).filter(Boolean);
-    }
-
-    return res.json({ [listName]: list });
-});
-
-app.get("/profile", (req, res) => res.json(portfolioData.profile));
-app.patch("/profile", (req, res) => {
-    if (req.body.name !== undefined) portfolioData.profile.name = req.body.name;
-    if (req.body.bio !== undefined) portfolioData.profile.bio = req.body.bio;
-    res.json({ message: "Profile updated", profile: portfolioData.profile });
-});
-
-app.get("/experience", (req, res) => res.json(portfolioData.experience));
-app.get("/experience/:id", (req, res) => {
-    const item = portfolioData.experience.find(exp => exp.id === Number(req.params.id));
-    if (!item) return res.status(404).json({ message: "Experience not found" });
-    res.json(item);
-});
-app.patch("/experience/:id", (req, res) => {
-    const item = portfolioData.experience.find(exp => exp.id === Number(req.params.id));
-    if (!item) return res.status(404).json({ message: "Experience not found" });
-    if (req.body.title !== undefined) item.title = req.body.title;
-    if (req.body.subtitle !== undefined) item.subtitle = req.body.subtitle;
-    if (req.body.description !== undefined) item.description = req.body.description;
-    if (req.body.technologies !== undefined) item.technologies = Array.isArray(req.body.technologies) ? req.body.technologies : req.body.technologies.split(",").map(value => value.trim()).filter(Boolean);
-    if (req.body.responsibilities !== undefined) item.responsibilities = Array.isArray(req.body.responsibilities) ? req.body.responsibilities : req.body.responsibilities.split(",").map(value => value.trim()).filter(Boolean);
-    res.json({ message: "Experience updated", experience: item });
-});
-
-app.patch("/project/:id", (req, res) => {
-    const item = portfolioData.projects.find(project => project.id === Number(req.params.id));
-    if (!item) return res.status(404).json({ message: "Project not found" });
-    if (req.body.title !== undefined) item.title = req.body.title;
-    if (req.body.description !== undefined) item.description = req.body.description;
-    if (req.body.tech !== undefined) item.tech = Array.isArray(req.body.tech) ? req.body.tech : req.body.tech.split(",").map(value => value.trim()).filter(Boolean);
-    if (req.body.live !== undefined) item.live = req.body.live;
-    if (req.body.github !== undefined) item.github = req.body.github;
-    res.json({ message: "Project updated", project: item });
-});
-
-app.patch("/skill/:id", (req, res) => {
-    const item = portfolioData.skills.find(skill => skill.id === Number(req.params.id));
-    if (!item) return res.status(404).json({ message: "Skill not found" });
-    if (req.body.name !== undefined) item.name = req.body.name;
-    if (req.body.description !== undefined) item.description = req.body.description;
-    res.json({ message: "Skill updated", skill: item });
-});
-
-app.patch("/learning/:id", (req, res) => {
-    const item = portfolioData.learning.find(entry => entry.id === Number(req.params.id));
-    if (!item) return res.status(404).json({ message: "Learning item not found" });
-    if (req.body.title !== undefined) item.title = req.body.title;
-    if (req.body.progress !== undefined) item.progress = Math.min(100, Math.max(0, Number(req.body.progress)));
-    res.json({ message: "Learning updated", learning: item });
-});
-
-app.patch("/certificate/:id", (req, res) => {
-    const item = portfolioData.certificates.find(entry => entry.id === Number(req.params.id));
-    if (!item) return res.status(404).json({ message: "Certificate not found" });
-    if (req.body.title !== undefined) item.title = req.body.title;
-    if (req.body.organization !== undefined) item.organization = req.body.organization;
-    if (req.body.description !== undefined) item.description = req.body.description;
-    res.json({ message: "Certificate updated", certificate: item });
-});
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
+app.get("/admin", (req, res) => res.sendFile(path.join(__dirname, "admin.html")));
+app.get("/api/portfolio", (req, res) => res.json(portfolioData));
+app.get("/api/admin/session", (req, res) => res.json({ authenticated: Boolean(req.session.isAdmin), username: req.session.username || null }));
+app.post("/api/admin/login", (req, res) => { const { username, password } = req.body || {}; if (username !== adminUser || password !== adminPassword) return res.status(401).json({ error: "Incorrect username or password" }); req.session.isAdmin = true; req.session.username = username; res.json({ ok: true }); });
+app.post("/api/admin/logout", requireAdmin, (req, res) => req.session.destroy(() => res.json({ ok: true })));
+app.get("/api/admin/portfolio", requireAdmin, (req, res) => res.json(portfolioData));
+app.patch("/api/admin/profile", requireAdmin, (req, res) => { const { name, bio, email, linkedin, github } = req.body || {}; if (!String(name || "").trim() || !String(bio || "").trim()) return res.status(400).json({ error: "Name and bio are required" }); portfolioData.profile = { ...portfolioData.profile, name: String(name).trim(), bio: String(bio).trim(), email: String(email || "").trim(), linkedin: String(linkedin || "").trim(), github: String(github || "").trim() }; saveData(); res.json(portfolioData.profile); });
+app.post("/api/admin/:section", requireAdmin, (req, res) => { const section = sectionName(req.params.section); if (!section) return res.status(400).json({ error: "Unsupported section" }); const error = validate(section, req.body); if (error) return res.status(400).json({ error }); const list = portfolioData[section]; const id = list.length ? Math.max(...list.map(item => Number(item.id) || 0)) + 1 : 1; const item = normalize(section, req.body, { id }); item.id = id; list.push(item); saveData(); res.status(201).json(item); });
+app.patch("/api/admin/:section/:id", requireAdmin, (req, res) => { const section = sectionName(req.params.section); const list = portfolioData[section]; if (!list) return res.status(400).json({ error: "Unsupported section" }); const index = list.findIndex(item => item.id === Number(req.params.id)); if (index < 0) return res.status(404).json({ error: "Item not found" }); const error = validate(section, { ...list[index], ...req.body }); if (error) return res.status(400).json({ error }); list[index] = normalize(section, req.body, list[index]); saveData(); res.json(list[index]); });
+app.delete("/api/admin/:section/:id", requireAdmin, (req, res) => { const section = sectionName(req.params.section); const list = portfolioData[section]; if (!list) return res.status(400).json({ error: "Unsupported section" }); const index = list.findIndex(item => item.id === Number(req.params.id)); if (index < 0) return res.status(404).json({ error: "Item not found" }); list.splice(index, 1); saveData(); res.json({ ok: true }); });
 
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-    console.log(`🚀 Portfolio running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Portfolio running on http://localhost:${PORT}`));
