@@ -1,0 +1,38 @@
+[
+    {
+        "name": "HTML5",
+        "description": "Semantic and accessible web pages."
+    },
+    {
+        "name": "CSS3",
+        "description": "Responsive layouts, Flexbox, Grid and animations."
+    },
+    {
+        "name": "JavaScript",
+        "description": "Interactive websites and dynamic functionality."
+    },
+    {
+        "name": "DOM Manipulation",
+        "description": "Creating interactive interfaces with JavaScript."
+    },
+    {
+        "name": "JSON",
+        "description": "Working with structured data in web applications."
+    },
+    {
+        "name": "Responsive Design",
+        "description": "Building websites that work on all devices."
+    },
+    {
+        "name": "Git & GitHub",
+        "description": "Version control and project management."
+    },
+    {
+        "name": "Java",
+        "description": "Object-oriented programming and application development."
+    },
+    {
+        "name": "C++",
+        "description": "Algorithms, problem solving and data structures."
+    }
+]

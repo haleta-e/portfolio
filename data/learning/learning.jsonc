@@ -1,0 +1,15 @@
+[
+  {
+    "title": "JavaScript ES6",
+    "progress": 30
+  },
+  {
+    "title": "DOM Manipulation",
+    "progress": 10
+  },
+  {
+    "title": "JSON",
+    "progress": 10
+  }
+  
+]
