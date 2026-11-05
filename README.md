@@ -1,5 +1,10 @@
 # Etsegenet Amsalu — Developer Portfolio & Atelier Deck
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-success?style=for-the-badge&logo=vercel)](https://portfolio-two-gamma-op2rvuee0r.vercel.app)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Portfolio-181717?style=for-the-badge&logo=github)](https://github.com/haleta-e/portfolio)
+
+**🌐 Live Application URL**: [https://portfolio-two-gamma-op2rvuee0r.vercel.app](https://portfolio-two-gamma-op2rvuee0r.vercel.app)
+
 An editorial, interactive full-stack personal developer portfolio for **Etsegenet Amsalu** — Computer Science student at Addis Ababa University and frontend developer crafting responsive interfaces, clean architectures, and interactive digital experiences.
 
 ---
